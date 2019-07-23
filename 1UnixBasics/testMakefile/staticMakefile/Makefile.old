@@ -1,0 +1,23 @@
+#VPATH = hellolib
+vpath % hellolib
+#vpath %.h hellolib
+objects = proMain.o hello.o
+all : hello 
+.PHONY : all
+
+
+
+hello : $(objects)
+	gcc -o hello $(objects)
+$(objects) : %.o : %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+#
+#proMain.o : hello.h
+#hello.o : hello.h
+##	gcc -c hellolib/hello.c
+#
+.PHONY : clean
+clean : cleanobj 
+	rm hello
+cleanobj:
+	rm *.o

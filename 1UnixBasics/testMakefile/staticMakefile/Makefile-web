@@ -1,0 +1,21 @@
+#VPATH = hellolib
+vpath % hellolib
+#vpath %.h hellolib
+objects = proMain.o hello.o
+sources = proMain.c hello.c
+all : hello 
+.PHONY : all
+
+-include $(sources:.c=.d)
+%.o: %.c
+	gcc -c -g -Wall $< -o $@ -MD -MF $*.d -MP
+hello : $(objects)
+	gcc -o hello $(objects)
+	
+.PHONY : clean
+clean : cleanobj 
+	rm hello 
+cleanobj:
+	rm *.o
+cleand:
+	rm *.d

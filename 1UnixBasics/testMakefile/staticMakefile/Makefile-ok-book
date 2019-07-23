@@ -1,0 +1,33 @@
+#VPATH = hellolib
+vpath % hellolib
+#vpath %.h hellolib
+objects = proMain.o hello.o
+sources = proMain.c hello.c
+all : hello 
+.PHONY : all
+
+-include $(sources:.c=.d)
+%.d: %.c
+	@set -e; rm -f $@; \
+		$(CC) -M $(CPPFLAGS) $< > $@.$$$$; \
+		sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+		rm -f $@.$$$$
+#%.o: %.c
+#	gcc -c -g -Wall $< -o $@ -MD -MF $*.d -MP
+hello : $(objects)
+	gcc -o hello $(objects)
+$(objects) : %.o : %.c
+	$(CC) -c $(CFLAGS) $< -o $@
+	
+#
+#proMain.o : hello.h
+#hello.o : hello.h
+##	gcc -c hellolib/hello.c
+#
+.PHONY : clean
+clean : cleanobj 
+	rm hello 
+cleanobj:
+	rm *.o
+cleand:
+	rm *.d
