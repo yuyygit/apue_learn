@@ -16,13 +16,14 @@ int main(void)
         }
         else if (pid == 0){ /* child */
             execlp(buf, buf, (char *)0);
+            printf("child running.. \n");
             err_ret("couldn't execute: %s", buf);
             exit(127);
-
-            
         }
         if ((pid = waitpid(pid, &status, 0)) < 0)
             err_sys("waitpid error");
+        if (pid == 0)
+            printf("This is child\n");
         printf("%% ");
     }
     exit(0);
