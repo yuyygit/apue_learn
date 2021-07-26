@@ -1,4 +1,4 @@
-#include "apue.h"
+#include "apue.h" 
 #include <sys/wait.h>
 
 static void sig_int(int);
@@ -11,6 +11,8 @@ int main (void)
 
     if (signal(SIGINT, sig_int) == SIG_ERR)
         err_sys("signal error");
+    else
+        printf("sig_int register success!\n");
 
     printf("%% "); /* print prompt (print requires %% to % */
     while (fgets(buf, MAXLINE, stdin) != NULL){
@@ -20,6 +22,7 @@ int main (void)
         if ((pid = fork()) < 0){
             err_sys("fork error");
         } else if (pid == 0) { /* child */
+            printf("child\tpid:%ld\n", (long)getpid());
             execlp(buf, buf, (char *)0);
             err_ret("couldn't execute: %s", buf);
             exit(127);
@@ -30,6 +33,7 @@ int main (void)
         if ((pid = waitpid(pid, &status, 0)) < 0)
             err_sys("waitpid error");
 
+        printf("parent\tpid:%ld\n", (long)getpid());
         printf("%% ");
     }
     exit(0);

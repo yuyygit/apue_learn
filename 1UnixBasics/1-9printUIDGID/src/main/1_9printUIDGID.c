@@ -2,6 +2,6 @@
 
 int main(void)
 {
-    printf("uid = %d, gid = %d \n", getuid(), getgid());
+    printf("uid = %d,\t gid = %d,\t  pid= %d\n", getuid(), getgid(), getpid());
     exit(0);
 }

@@ -14,8 +14,8 @@ hello : $(objects)
 	
 .PHONY : clean
 clean : cleanobj 
-	rm hello 
+	-rm hello 
 cleanobj:
-	rm *.o
+	-rm *.o
 cleand:
-	rm *.d
+	-rm *.d
